@@ -35,7 +35,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Expense App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -46,6 +46,16 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
+          Card(
+            elevation: 5,
+            child: Column(
+              children: <Widget>[
+                TextField(),
+                TextField(),
+                
+              ],
+              ),
+              ),
           Column(
             children: transactions.map((tx) {
               return Card(
@@ -84,7 +94,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          DateFormat().format(tx.date),
+                          DateFormat.yMMMd().format(tx.date),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
