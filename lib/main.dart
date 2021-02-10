@@ -1,6 +1,6 @@
 import 'package:expense_tracker/transaction.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -84,7 +84,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tx.date.toString(),
+                          DateFormat().format(tx.date),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -94,7 +94,8 @@ class MyHomePage extends StatelessWidget {
                   ],
                 ),
               );
-            }).toList(),
+            }
+            ).toList(),
           ),
         ],
       ),
