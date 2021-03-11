@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
@@ -14,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        errorColor: Colors.red,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               // ignore: deprecated_member_use
@@ -22,6 +25,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              button: TextStyle(color: Colors.white),
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -72,11 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String mTitle, double mAmount) {
+  void _addNewTransaction(String mTitle, double mAmount, DateTime chosenDate) {
     final newTx = Transaction(
       title: mTitle,
       amount: mAmount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
 
@@ -95,6 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
             behavior: HitTestBehavior.opaque,
           );
         });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
@@ -116,8 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            Chart(_recentTransactions), 
+            TransactionList(
+                _userTransactions, 
+                _deleteTransaction,
+                ),
           ],
         ),
       ),
